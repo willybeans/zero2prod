@@ -1,5 +1,6 @@
 use actix_web::dev::Server;
 use actix_web::{web, App, HttpServer};
+use actix_web::web::Data;
 use std::net::TcpListener;
 use sqlx::PgPool;
 use crate::routes::{health_check, subscribe};
@@ -9,7 +10,7 @@ pub fn run(
     db_pool: PgPool
     ) -> Result<Server, std::io::Error> {
         //wrap connection in  a msart pointer
-        let db_pool = web::Data::new(db_pool);
+        let db_pool = Data::new(db_pool);
         //capture connection from the surrounding environment
         let server = HttpServer::new(move || {
         App::new()
